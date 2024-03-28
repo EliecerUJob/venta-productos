@@ -21,6 +21,7 @@ public class PaymentEntity {
     private Integer id;
     private BigDecimal totalPayment;
     private LocalDate paymentDate;
+    @Enumerated(EnumType.STRING)
     private PaymentMethodEnum paymentMethod;
 
     //Foreign keys

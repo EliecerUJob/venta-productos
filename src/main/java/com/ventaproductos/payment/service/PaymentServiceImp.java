@@ -59,9 +59,9 @@ public class PaymentServiceImp implements PaymentServiceInterface{
         return repository.findByPaymentDateBetween(start, end);
     }
 
-    @Override
-    public PaymentEntity getByOrderByIdAndPaymentMethod(Integer id, String pMethod) {
-        return repository.findByOrderByIdAndPaymentMethod(id, pMethod);
-    }
+    // @Override
+    // public PaymentEntity getByOrderByIdAndPaymentMethod(Integer id, String pMethod) {
+    //     return repository.findByOrderByIdAndPaymentMethod(id, pMethod);
+    // }
     
 }

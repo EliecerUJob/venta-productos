@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.ventaproductos.client.entity.ClientEntity;
 import com.ventaproductos.order.entity.OrderEntity;
-import com.ventaproductos.order.entity.OrderStatusEnum;
 import com.ventaproductos.order.repository.OrderRepository;
 
 @Service
@@ -65,7 +64,7 @@ public class OrderServiceImp implements OrderServiceInterface{
     }
 
     @Override
-    public List<OrderEntity> getByClientAndStatus(ClientEntity client, OrderStatusEnum status) {
+    public List<OrderEntity> getByClientAndStatus(ClientEntity client, String status) {
         return repository.findByClientAndStatus(client, status);
     }
     

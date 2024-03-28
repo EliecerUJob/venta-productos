@@ -1,54 +1,29 @@
 package com.ventaproductos.client.service;
 
-import java.util.List;
+import java.util.*;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.ventaproductos.client.entity.ClientDTO;
 import com.ventaproductos.client.entity.ClientEntity;
+import com.ventaproductos.client.mapper.ClientMapper;
 import com.ventaproductos.client.repository.ClientRepository;
 
 @Service
 public class ClientServiceImpl implements ClientServiceInterface{
 
     private ClientRepository repository;
+    private ClientMapper mapper;
 
     public ClientServiceImpl(ClientRepository repository) {
         this.repository = repository;
-    }
-
-    @Override
-    public List<ClientEntity> getAll() {
-        return repository.findAll();
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    public Optional<ClientEntity> get(Integer id) {
-        return repository.findById(id);
     }
 
     @SuppressWarnings("null")
     @Override
     public void delete(Integer id) {
         repository.deleteById(id);
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    public Optional<ClientEntity> update(Integer id, ClientEntity client) {
-        return repository.findById(id).map( clientDb -> {
-            clientDb.setName(client.getName());
-            clientDb.setEmail(client.getEmail());
-            clientDb.setAddress(client.getAddress());
-            return repository.save(clientDb);
-        } );
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    public ClientEntity create(ClientEntity client) {
-        return repository.save(client);
     }
 
     @Override
@@ -64,6 +39,39 @@ public class ClientServiceImpl implements ClientServiceInterface{
     @Override
     public List<ClientEntity> getAllByName(String name) {
         return this.repository.findAllByName(name);
+    }
+
+    @Override
+    public List<ClientDTO> getAll() {
+        List<ClientDTO> clientDTOs = new ArrayList<>();
+        repository.findAll().stream().forEach( client -> {
+            clientDTOs.add(mapper.toDTO(client));
+        });
+
+        return clientDTOs;
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    public ClientDTO get(Integer id) {
+        Optional<ClientEntity> client = repository.findById(id);
+        if (client.isPresent()) {
+            ClientEntity clientToDTO = client.get();
+            return mapper.toDTO(clientToDTO);
+        }
+        return new ClientDTO();
+    }
+
+    @Override
+    public Optional<ClientDTO> update(Integer id, ClientDTO client) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    @Override
+    public ClientEntity create(ClientDTO client) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'create'");
     }
     
 }

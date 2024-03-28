@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import com.ventaproductos.client.entity.ClientEntity;
 import com.ventaproductos.order.entity.OrderEntity;
-import com.ventaproductos.order.entity.OrderStatusEnum;
 
 public interface OrderServiceInterface {
     
@@ -17,6 +16,6 @@ public interface OrderServiceInterface {
     OrderEntity create(OrderEntity order);
 
     List<OrderEntity> getByDateOrderBetween(LocalDate start, LocalDate end);
-    List<OrderEntity> getByClientAndStatus(ClientEntity client, OrderStatusEnum status);
+    List<OrderEntity> getByClientAndStatus(ClientEntity client, String status);
 
 }

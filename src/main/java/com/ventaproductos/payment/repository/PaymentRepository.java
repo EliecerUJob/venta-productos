@@ -9,6 +9,6 @@ import java.time.LocalDate;
 public interface PaymentRepository extends JpaRepository<PaymentEntity, Integer>{
     
     List<PaymentEntity> findByPaymentDateBetween(LocalDate start, LocalDate end);
-    PaymentEntity findByOrderByIdAndPaymentMethod(Integer id, String pMethod);
+    // PaymentEntity findByOrderByIdAndPaymentMethod(Integer id, String pMethod);
 
 }

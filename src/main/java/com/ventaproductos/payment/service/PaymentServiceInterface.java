@@ -15,6 +15,6 @@ public interface PaymentServiceInterface {
     void delete(Integer id);
 
     List<PaymentEntity> getByPaymentDateBetween(LocalDate start, LocalDate end);
-    PaymentEntity getByOrderByIdAndPaymentMethod(Integer id, String pMethod);
+    // PaymentEntity getByOrderByIdAndPaymentMethod(Integer id, String pMethod);
 
 }

@@ -54,10 +54,10 @@ public class OrderItemServiceImp implements OrderItemServiceInterface{
         repository.deleteById(id);
     }
 
-    @Override
-    public OrderItemEntity getByOrderById(Integer id) {
-        return repository.findByOrderById(id);
-    }
+    // @Override
+    // public OrderItemEntity getByOrderById(OrderEntity order, Integer id) {
+    //     return repository.findByOrderById(order, id);
+    // }
 
     @Override
     public List<OrderItemEntity> findByProduct(ProductEntity product) {

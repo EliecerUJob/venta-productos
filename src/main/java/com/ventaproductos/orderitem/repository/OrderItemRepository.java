@@ -12,7 +12,7 @@ import com.ventaproductos.product.entity.ProductEntity;
 
 public interface OrderItemRepository extends JpaRepository<OrderItemEntity, Integer>{
     
-    OrderItemEntity findByOrderById(Integer id);
+    // OrderItemEntity findByOrderById( OrderEntity order, Integer id);
     List<OrderItemEntity> findByProduct(ProductEntity product);
 
     @Query("SELECT SUM(oi.quantity * oi.unitPrice) FROM OrderItemEntity oi WHERE oi.product = :product")

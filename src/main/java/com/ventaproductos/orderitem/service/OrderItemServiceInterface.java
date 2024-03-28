@@ -14,7 +14,7 @@ public interface OrderItemServiceInterface {
     Optional<OrderItemEntity> update(Integer id, OrderItemEntity oItem);
     void delete(Integer id);
 
-    OrderItemEntity getByOrderById(Integer id);
+    // OrderItemEntity getByOrderById(OrderEntity order, Integer id);
     List<OrderItemEntity> findByProduct(ProductEntity product);
     
 }
