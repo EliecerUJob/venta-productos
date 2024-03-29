@@ -4,18 +4,18 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import com.ventaproductos.client.entity.ClientEntity;
-import com.ventaproductos.order.entity.OrderEntity;
+import com.ventaproductos.client.entity.ClientDTO;
+import com.ventaproductos.order.entity.OrderDTO;
 
 public interface OrderServiceInterface {
     
-    Optional<OrderEntity> get(Integer id);
-    List<OrderEntity> getAll();
+    Optional<OrderDTO> get(Integer id);
+    List<OrderDTO> getAll();
     void delete(Integer id);
-    Optional<OrderEntity> update(Integer id, OrderEntity order);
-    OrderEntity create(OrderEntity order);
+    Optional<OrderDTO> update(Integer id, OrderDTO order);
+    OrderDTO create(OrderDTO order);
 
-    List<OrderEntity> getByDateOrderBetween(LocalDate start, LocalDate end);
-    List<OrderEntity> getByClientAndStatus(ClientEntity client, String status);
+    List<OrderDTO> getByDateOrderBetween(LocalDate start, LocalDate end);
+    List<OrderDTO> getByClientAndStatus(ClientDTO client, String status);
 
 }

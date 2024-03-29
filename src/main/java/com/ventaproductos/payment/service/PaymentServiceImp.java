@@ -1,50 +1,63 @@
 package com.ventaproductos.payment.service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
+import com.ventaproductos.order.mapper.OrderMapper;
+import com.ventaproductos.payment.entity.PaymentDTO;
 import com.ventaproductos.payment.entity.PaymentEntity;
+import com.ventaproductos.payment.entity.PaymentMethodEnum;
+import com.ventaproductos.payment.mapper.PaymentMapper;
 import com.ventaproductos.payment.repository.PaymentRepository;
 
 @Service
 public class PaymentServiceImp implements PaymentServiceInterface{
 
     private PaymentRepository repository;
+    private PaymentMapper paymentMapper;
+    private OrderMapper orderMapper;
 
-    public PaymentServiceImp(PaymentRepository repository) {
+    public PaymentServiceImp(PaymentRepository repository, OrderMapper orderMapper) {
         this.repository = repository;
+        this.orderMapper = orderMapper;
     }
 
     @SuppressWarnings("null")
     @Override
-    public PaymentEntity create(PaymentEntity payment) {
-        return repository.save(payment);
+    public PaymentDTO create(PaymentDTO payment) {
+        PaymentEntity paymentEntity = paymentMapper.toEntity(payment);
+        return paymentMapper.toDTO(repository.save(paymentEntity));
     }
 
     @SuppressWarnings("null")
     @Override
-    public Optional<PaymentEntity> get(Integer id) {
-        return repository.findById(id);
+    public Optional<PaymentDTO> get(Integer id) {
+        PaymentEntity paymentEntity = repository.findById(id).get();
+        return Optional.of(paymentMapper.toDTO(paymentEntity));
     }
 
     @Override
-    public List<PaymentEntity> getAll() {
-        return repository.findAll();
+    public List<PaymentDTO> getAll() {
+        List<PaymentDTO> paymentDTOList = new ArrayList<>();
+        repository.findAll().stream().forEach( paymentDb -> {
+            paymentDTOList.add(paymentMapper.toDTO(paymentDb));
+        } );
+
+        return paymentDTOList;
     }
 
     @SuppressWarnings("null")
     @Override
-    public Optional<PaymentEntity> update(Integer id, PaymentEntity payment) {
+    public Optional<PaymentDTO> update(Integer id, PaymentDTO payment) {
         return repository.findById(id).map( paymentDb -> {
-            paymentDb.setOrder(payment.getOrder());
+            paymentDb.setOrder( orderMapper.toEntity(payment.getOrder()) );
             paymentDb.setPaymentDate(payment.getPaymentDate());
-            paymentDb.setPaymentMethod(payment.getPaymentMethod());
+            paymentDb.setPaymentMethod(PaymentMethodEnum.valueOf(payment.getPaymentMethod()));
             paymentDb.setTotalPayment(payment.getTotalPayment());
 
-            return repository.save(paymentDb);
+            return paymentMapper.toDTO(repository.save(paymentDb));
         });
     }
 
@@ -55,8 +68,13 @@ public class PaymentServiceImp implements PaymentServiceInterface{
     }
 
     @Override
-    public List<PaymentEntity> getByPaymentDateBetween(LocalDate start, LocalDate end) {
-        return repository.findByPaymentDateBetween(start, end);
+    public List<PaymentDTO> getByPaymentDateBetween(LocalDate start, LocalDate end) {
+        List<PaymentDTO> paymentDTOList = new ArrayList<>();
+        repository.findByPaymentDateBetween(start, end).stream().forEach( paymentDb -> {
+            paymentDTOList.add( paymentMapper.toDTO(paymentDb) );
+        } );
+
+        return paymentDTOList;
     }
 
     // @Override

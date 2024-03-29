@@ -17,7 +17,7 @@ public class OrderDTO {
     
     private Integer id;
     private LocalDate dateOrder;
-    private String status;
+    private OrderStatusEnum status;
 
     private ClientDTO client;
 

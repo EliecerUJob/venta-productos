@@ -1,50 +1,66 @@
 package com.ventaproductos.orderitem.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
+import com.ventaproductos.order.mapper.OrderMapper;
+import com.ventaproductos.orderitem.entity.OrderItemDTO;
 import com.ventaproductos.orderitem.entity.OrderItemEntity;
+import com.ventaproductos.orderitem.mapper.OrderItemMapper;
 import com.ventaproductos.orderitem.repository.OrderItemRepository;
+import com.ventaproductos.product.entity.ProductDTO;
 import com.ventaproductos.product.entity.ProductEntity;
+import com.ventaproductos.product.mapper.ProductMapper;
 
 @Service
 public class OrderItemServiceImp implements OrderItemServiceInterface{
 
     private OrderItemRepository repository;
+    private OrderItemMapper orderItemMapper;
+    private ProductMapper productMapper;
+    private OrderMapper orderMapper;
 
-    public OrderItemServiceImp(OrderItemRepository repository) {
+    public OrderItemServiceImp(
+            OrderItemRepository repository, 
+            OrderItemMapper orderItemMapper,
+            ProductMapper productMapper,
+            OrderMapper orderMapper
+        ) {
         this.repository = repository;
+        this.orderItemMapper = orderItemMapper;
     }
 
     @SuppressWarnings("null")
     @Override
-    public OrderItemEntity create(OrderItemEntity oItem) {
-        return repository.save(oItem);
+    public OrderItemDTO create(OrderItemDTO oItem) {
+        OrderItemEntity orderItemEntity = orderItemMapper.toEntity(oItem);
+        return orderItemMapper.toDTO(repository.save(orderItemEntity));
     }
 
     @SuppressWarnings("null")
     @Override
-    public Optional<OrderItemEntity> get(Integer id) {
-        return repository.findById(id);
+    public Optional<OrderItemDTO> get(Integer id) {
+        Optional<OrderItemEntity> orderItemEntity = repository.findById(id);
+        return Optional.of(orderItemMapper.toDTO(orderItemEntity.get()));
     }
 
     @Override
-    public List<OrderItemEntity> getAll() {
-        return repository.findAll();
+    public List<OrderItemDTO> getAll() {
+        return orderItemMapper.tOrderItemDTOList(repository.findAll());
     }
 
     @SuppressWarnings("null")
     @Override
-    public Optional<OrderItemEntity> update(Integer id, OrderItemEntity oItem) {
+    public Optional<OrderItemDTO> update(Integer id, OrderItemDTO oItem) {
+
         return repository.findById(id).map( oItemDb -> {
-            oItemDb.setOrder(oItem.getOrder());
-            oItemDb.setProduct( oItem.getProduct() );
+            oItemDb.setOrder( orderMapper.toEntity(oItem.getOrder()) );
+            oItemDb.setProduct( productMapper.toEntity(oItem.getProduct()) );
             oItemDb.setQuantity( oItem.getQuantity() );
             oItemDb.setUnitPrice( oItem.getUnitPrice() );
 
-            return repository.save(oItemDb);
+            return orderItemMapper.toDTO(repository.save(oItemDb));
         });
     }
 
@@ -60,8 +76,9 @@ public class OrderItemServiceImp implements OrderItemServiceInterface{
     // }
 
     @Override
-    public List<OrderItemEntity> findByProduct(ProductEntity product) {
-        return repository.findByProduct(product);
+    public List<OrderItemDTO> findByProduct(ProductDTO product) {
+        ProductEntity productEntity = productMapper.toEntity(product);
+        return orderItemMapper.tOrderItemDTOList(repository.findByProduct(productEntity));
     }
     
 }

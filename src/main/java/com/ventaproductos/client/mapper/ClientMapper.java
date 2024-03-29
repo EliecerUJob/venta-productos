@@ -18,7 +18,7 @@ public interface ClientMapper {
 
     @Mapping(target = "orders", ignore = true)
     ClientDTO toDTO(ClientEntity clientToDTO);
-
+        
     List<OrderEntity> toOrderEntityList(List<OrderDTO> orders);
     List<OrderDTO> toOrderDTOList(List<OrderEntity> orders);
 

@@ -16,7 +16,7 @@ public interface OrderItemMapper {
     @Mapping(target = "products", ignore=true)
     OrderItemEntity toEntity(OrderItemDTO orderItemDTO);
     
-    List<OrderItemEntity> toOrderItemDTOList(List<OrderItemDTO> orderItemDTO);
+    List<OrderItemEntity> toOrderItemEntityList(List<OrderItemDTO> orderItemDTO);
     List<OrderItemDTO> tOrderItemDTOList(List<OrderItemEntity> orderItemEntity);
 
 }

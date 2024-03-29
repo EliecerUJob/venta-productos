@@ -3,18 +3,18 @@ package com.ventaproductos.shippingdetail.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.ventaproductos.shippingdetail.entity.ShippingDetailEntity;
+import com.ventaproductos.shippingdetail.entity.ShippingDetailDTO;
 
 public interface ShippingdetailServiceInterface {
 
-    ShippingDetailEntity create(ShippingDetailEntity shippingDetail);
-    List<ShippingDetailEntity> getAll();
-    Optional<ShippingDetailEntity> get(Integer id);
-    Optional<ShippingDetailEntity> update(Integer id, ShippingDetailEntity shippingDetail);
+    ShippingDetailDTO create(ShippingDetailDTO shippingDetail);
+    List<ShippingDetailDTO> getAll();
+    Optional<ShippingDetailDTO> get(Integer id);
+    Optional<ShippingDetailDTO> update(Integer id, ShippingDetailDTO shippingDetail);
     void delete(Integer id);
 
-    // ShippingDetailEntity getByOrderById(Integer id);
-    List<ShippingDetailEntity> getByConveyor(String conveyor);
+    // ShippingDetailDTO getByOrderById(Integer id);
+    List<ShippingDetailDTO> getByConveyor(String conveyor);
     //List<ShippingDetailEntity> getByOrderByStatus(String status);  Convertir string status a enum
 
 }

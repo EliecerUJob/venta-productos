@@ -1,34 +1,59 @@
 package com.ventaproductos.order.service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
+import com.ventaproductos.client.entity.ClientDTO;
 import com.ventaproductos.client.entity.ClientEntity;
+import com.ventaproductos.client.mapper.ClientMapper;
+import com.ventaproductos.order.entity.OrderDTO;
 import com.ventaproductos.order.entity.OrderEntity;
+import com.ventaproductos.order.mapper.OrderMapper;
 import com.ventaproductos.order.repository.OrderRepository;
+import com.ventaproductos.orderitem.mapper.OrderItemMapper;
+import com.ventaproductos.payment.mapper.PaymentMapper;
+import com.ventaproductos.shippingdetail.mapper.ShippingDetailMapper;
 
 @Service
 public class OrderServiceImp implements OrderServiceInterface{
 
-    
     private OrderRepository repository;
+    private OrderMapper orderMapper;
+    private ClientMapper clientMapper;
+    private OrderItemMapper orderItemMapper;
+    private PaymentMapper paymentMapper;
+    private ShippingDetailMapper shippingDetailMapper;
     
-    public OrderServiceImp(OrderRepository repository) {
-        this.repository = repository;
+    public OrderServiceImp(
+            OrderMapper orderMapper, 
+            ClientMapper clientMapper, 
+            OrderItemMapper orderItemMapper,
+            PaymentMapper paymentMapper,
+            ShippingDetailMapper shippingDetailMapper
+        ) {
+            this.orderMapper = orderMapper;
+            this.clientMapper = clientMapper;
+            this.orderItemMapper = orderItemMapper;
+            this.paymentMapper = paymentMapper;
+            this.shippingDetailMapper = shippingDetailMapper;
     }
 
     @SuppressWarnings("null")
     @Override
-    public Optional<OrderEntity> get(Integer id) {
-        return repository.findById(id);        
+    public Optional<OrderDTO> get(Integer id) {
+        Optional<OrderEntity> orderEntity = repository.findById(id);
+        if (orderEntity.isPresent()) {
+            OrderEntity orderToDTO = orderEntity.get();
+            return Optional.of(orderMapper.toDTO(orderToDTO));
+        }
+        return Optional.empty();
     }
 
     @Override
-    public List<OrderEntity> getAll() {
-        return repository.findAll();
+    public List<OrderDTO> getAll() {
+        return orderMapper.toOrderDTOList(repository.findAll());
     }
 
     @SuppressWarnings("null")
@@ -37,35 +62,47 @@ public class OrderServiceImp implements OrderServiceInterface{
         repository.deleteById(id);
     }
 
-    @SuppressWarnings("null")
     @Override
-    public Optional<OrderEntity> update(Integer id, OrderEntity order) {
-        return repository.findById(id).map( orderDb -> {
-            orderDb.setClient(order.getClient());
+    @SuppressWarnings("null")
+    public Optional<OrderDTO> update(Integer id, OrderDTO order) {
+        Optional<OrderEntity> getOrder = repository.findById(id);
+
+        if (getOrder.isPresent()) {
+
+            OrderEntity orderDb = getOrder.get();
+
             orderDb.setDateOrder(order.getDateOrder());
-            orderDb.setOrderItems(order.getOrderItems());
-            orderDb.setPayment(order.getPayment());
-            orderDb.setShippingDetail(order.getShippingDetail());
-            orderDb.setStatus(order.getStatus());
+            orderDb.setClient(clientMapper.toEntity(order.getClient()));
+            orderDb.setOrderItems(orderItemMapper.toOrderItemEntityList(order.getOrderItems()));
+            orderDb.setPayment(paymentMapper.toEntity(order.getPayment()));
+            orderDb.setShippingDetail(shippingDetailMapper.toEntity(order.getShippingDetail()));
 
-            return repository.save(orderDb);
-        } );
+            orderDb.setStatus(order.getStatus());
+        
+            OrderEntity updateOrder = repository.save(orderDb);
+            return Optional.of(orderMapper.toDTO(updateOrder));
+
+        }
+
+        return Optional.empty();
     }
 
     @SuppressWarnings("null")
     @Override
-    public OrderEntity create(OrderEntity order) {
-        return repository.save(order);
+    public OrderDTO create(OrderDTO order) {
+        OrderEntity orderEntity = orderMapper.toEntity(order);
+        return orderMapper.toDTO(repository.save(orderEntity));
     }
 
     @Override
-    public List<OrderEntity> getByDateOrderBetween(LocalDate start, LocalDate end) {
-        return repository.findByDateOrderBetween(start, end);
+    public List<OrderDTO> getByDateOrderBetween(LocalDate start, LocalDate end) {
+        return orderMapper.toOrderDTOList(repository.findByDateOrderBetween(start, end));
     }
 
     @Override
-    public List<OrderEntity> getByClientAndStatus(ClientEntity client, String status) {
-        return repository.findByClientAndStatus(client, status);
+    public List<OrderDTO> getByClientAndStatus(ClientDTO client, String status) {
+        ClientEntity clientEntity = clientMapper.toEntity(client);
+        return orderMapper.toOrderDTOList(repository.findByClientAndStatus(clientEntity, status));
     }
-    
+
 }

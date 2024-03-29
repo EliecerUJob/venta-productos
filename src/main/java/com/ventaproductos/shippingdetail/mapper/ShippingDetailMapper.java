@@ -10,5 +10,5 @@ public interface ShippingDetailMapper {
     
     ShippingDetailDTO toDTO(ShippingDetailEntity entity);
     ShippingDetailEntity toEntity(ShippingDetailDTO dto);
-
+    
 }
