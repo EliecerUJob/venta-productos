@@ -36,10 +36,10 @@ public class ShippingDetailController {
         return new ResponseEntity<>(shippingDetail.getAll(),HttpStatus.OK);
     }
 
-    // @GetMapping("/{orderId} ") -----> Implementar método getByOrderById
-    // public ResponseEntity<Optional<ShippingDetailDTO>> getByOrderById(@PathVariable("orderId") Integer orderId){
-    //     return new ResponseEntity<>(shippingDetail.getByOrderById(orderId),HttpStatus.OK);
-    // }
+    @GetMapping("/{orderId} ")
+    public ResponseEntity<ShippingDetailDTO> getByOrderId(@PathVariable("orderId") Integer orderId){
+        return new ResponseEntity<>(shippingDetail.getByOrderId(orderId),HttpStatus.OK);
+    }
 
     @GetMapping("/conveyor/{conveyor}")
     public ResponseEntity<List<ShippingDetailDTO>> getByConveyor(@PathVariable("conveyor") String conveyor){
@@ -64,5 +64,5 @@ public class ShippingDetailController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    
+
 }

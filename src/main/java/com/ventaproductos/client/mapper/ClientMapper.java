@@ -17,6 +17,7 @@ public interface ClientMapper {
     @Mapping(target = "orders", ignore = true)
     ClientEntity toEntity(ClientDTO dto);
 
+    @Mapping(target = "orders", ignore = true)
     ClientEntity toEntitySave(ClientDTOSave dto);
 
     @Mapping(target = "orders", ignore = true)
