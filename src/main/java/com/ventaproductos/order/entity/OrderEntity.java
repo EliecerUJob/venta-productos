@@ -23,11 +23,13 @@ public class OrderEntity {
     private Integer id;
     @Column(name = "date_order")
     private LocalDate dateOrder;
+    
+    @Enumerated(EnumType.STRING)
     private OrderStatusEnum status;
 
     // Foreign keys
-    @ManyToOne
-    @JoinColumn(name = "client_id", unique = true)
+    @OneToOne
+    @JoinColumn(name = "client_id")
     private ClientEntity client;
 
     @OneToMany(mappedBy = "order")
