@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
-
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
@@ -43,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ProductDTO>> getMethodName(@RequestParam String searchTerm) {
+    public ResponseEntity<List<ProductDTO>> getByTerm(@RequestParam String searchTerm) {
         return new ResponseEntity<>(productService.getByNameContaining(searchTerm), HttpStatus.OK);
     }
     
@@ -67,7 +64,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> update(@PathVariable("id") Integer id, @RequestBody ProductDTO dto) {
         productService.update(id, dto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }

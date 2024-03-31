@@ -26,18 +26,15 @@ public class OrderServiceImp implements OrderServiceInterface{
     private PaymentMapper paymentMapper;
     private ShippingDetailMapper shippingDetailMapper;
     
-    public OrderServiceImp(
-            OrderMapper orderMapper, 
-            ClientMapper clientMapper, 
-            OrderItemMapper orderItemMapper,
-            PaymentMapper paymentMapper,
-            ShippingDetailMapper shippingDetailMapper
-        ) {
-            this.orderMapper = orderMapper;
-            this.clientMapper = clientMapper;
-            this.orderItemMapper = orderItemMapper;
-            this.paymentMapper = paymentMapper;
-            this.shippingDetailMapper = shippingDetailMapper;
+
+    public OrderServiceImp(OrderRepository repository, OrderMapper orderMapper, ClientMapper clientMapper,
+            OrderItemMapper orderItemMapper, PaymentMapper paymentMapper, ShippingDetailMapper shippingDetailMapper) {
+        this.repository = repository;
+        this.orderMapper = orderMapper;
+        this.clientMapper = clientMapper;
+        this.orderItemMapper = orderItemMapper;
+        this.paymentMapper = paymentMapper;
+        this.shippingDetailMapper = shippingDetailMapper;
     }
 
     @SuppressWarnings("null")
