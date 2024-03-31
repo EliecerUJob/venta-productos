@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -45,21 +47,27 @@ public class ProductController {
         return new ResponseEntity<>(productService.getByNameContaining(searchTerm), HttpStatus.OK);
     }
     
-    // @GetMapping("/priceandstock")
-    // public ResponseEntity<List<ProductDTO>> getByPriceAndStock(@PathVariable("price") BigDecimal price, @PathVariable("stock") int stock) {
-    //     return new ResponseEntity<>(productService.getByPriceAndStock(price, stock), HttpStatus.OK);
-    // }
+    @GetMapping("/priceandstock")
+    public ResponseEntity<List<ProductDTO>> getByPriceAndStock(@RequestParam BigDecimal price, @RequestParam int stock) {
+        return new ResponseEntity<>(productService.getByPriceAndStock(price, stock), HttpStatus.OK);
+    }
 
     @PostMapping()
-    public ResponseEntity<ProductDTO> postMethodName(@RequestBody ProductDTO dto) throws Exception {
+    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO dto) throws Exception {
         productService.create(dto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         productService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDTO> update(@PathVariable("id") Integer id, @RequestBody ProductDTO dto) {
+        productService.update(id, dto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
