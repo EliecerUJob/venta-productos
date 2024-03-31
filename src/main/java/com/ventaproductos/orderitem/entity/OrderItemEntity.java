@@ -1,5 +1,4 @@
 package com.ventaproductos.orderitem.entity;
-
 import com.ventaproductos.order.entity.OrderEntity;
 import com.ventaproductos.product.entity.ProductEntity;
 import jakarta.persistence.*;

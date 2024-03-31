@@ -1,5 +1,4 @@
 package com.ventaproductos.client.repository;
-
 import com.ventaproductos.client.entity.ClientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

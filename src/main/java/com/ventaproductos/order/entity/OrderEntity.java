@@ -1,5 +1,4 @@
 package com.ventaproductos.order.entity;
-
 import com.ventaproductos.client.entity.ClientEntity;
 import com.ventaproductos.orderitem.entity.OrderItemEntity;
 import com.ventaproductos.payment.entity.PaymentEntity;
