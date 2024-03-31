@@ -87,9 +87,10 @@ public class ClientServiceImpl implements ClientServiceInterface{
 
     @SuppressWarnings("null")
     @Override
-    public ClientDTO create(ClientDTO client) {
+    public Optional<ClientDTO> create(ClientDTO client) {
         ClientEntity clientEntity = mapper.toEntity(client);
-        return mapper.toDTO(repository.save(clientEntity));
+        ClientEntity clienteSave = repository.save(clientEntity);
+        return Optional.of(mapper.toDTO(clienteSave));
     }
     
 }

@@ -19,9 +19,10 @@ public class PaymentServiceImp implements PaymentServiceInterface{
     private PaymentMapper paymentMapper;
     private OrderMapper orderMapper;
 
-    public PaymentServiceImp(PaymentRepository repository, OrderMapper orderMapper) {
+    public PaymentServiceImp(PaymentRepository repository, OrderMapper orderMapper, PaymentMapper paymentMapper) {
         this.repository = repository;
         this.orderMapper = orderMapper;
+        this.paymentMapper = paymentMapper;
     }
 
     @SuppressWarnings("null")

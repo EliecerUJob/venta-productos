@@ -11,7 +11,7 @@ public interface ClientServiceInterface {
     Optional<ClientDTO> get(Integer id);
     void delete(Integer id);
     Optional<ClientDTO> update(Integer id, ClientDTO client);
-    ClientDTO create(ClientDTO client);
+    Optional<ClientDTO> create(ClientDTO client);
 
     ClientDTO getByEmail(String email);
     ClientDTO getByAddress(String address);

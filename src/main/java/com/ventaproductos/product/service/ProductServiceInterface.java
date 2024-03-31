@@ -15,7 +15,7 @@ public interface ProductServiceInterface {
     void delete(Integer id);
 
     List<ProductDTO> getByNameContaining(String term);
-    List<ProductDTO> getByStock(int stock);
+    List<ProductDTO> getByStock();
     List<ProductDTO> getByPriceAndStock(BigDecimal price, int stock);
 
 }

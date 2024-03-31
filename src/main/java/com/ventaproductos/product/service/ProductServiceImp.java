@@ -65,8 +65,17 @@ public class ProductServiceImp implements ProductServiceInterface{
     }
 
     @Override
-    public List<ProductDTO> getByStock(int stock) {
-        return productMapper.toProductDTOList(repository.findByStock(stock));
+    public List<ProductDTO> getByStock() {
+        // List<ProductDTO> productInStockDtoList = new ArrayList<>();
+        // repository.findAll().stream().forEach( product -> {
+        //     if (product.getStock() >= 0) {
+        //         productInStockDtoList.add(productMapper.toDTO(product));
+        //     }
+        // });
+
+        // return productInStockDtoList;
+
+        return productMapper.toProductDTOList(repository.searchByStock());
     }
 
     @Override

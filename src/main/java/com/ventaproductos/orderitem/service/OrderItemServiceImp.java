@@ -29,6 +29,8 @@ public class OrderItemServiceImp implements OrderItemServiceInterface{
         ) {
         this.repository = repository;
         this.orderItemMapper = orderItemMapper;
+        this.productMapper = productMapper;
+        this.orderMapper = orderMapper;
     }
 
     @SuppressWarnings("null")
