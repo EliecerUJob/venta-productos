@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import com.ventaproductos.client.entity.ClientDTO;
+import com.ventaproductos.client.entity.ClientDTOSave;
 import com.ventaproductos.orderitem.entity.OrderItemDTO;
 import com.ventaproductos.payment.entity.PaymentDTO;
 import com.ventaproductos.shippingdetail.entity.ShippingDetailDTO;
@@ -19,7 +20,7 @@ public class OrderDTO {
     private LocalDate dateOrder;
     private OrderStatusEnum status;
 
-    private ClientDTO client;
+    private ClientDTOSave client;
 
     private List<OrderItemDTO> orderItems;
     private PaymentDTO payment;

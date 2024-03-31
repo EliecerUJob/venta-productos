@@ -50,7 +50,13 @@ public class OrderServiceImp implements OrderServiceInterface{
 
     @Override
     public List<OrderDTO> getAll() {
-        return orderMapper.toOrderDTOList(repository.findAll());
+        List<OrderDTO> orderDTOs = new ArrayList<>();
+        repository.findAll().stream().forEach( orderDb -> {
+            orderDTOs.add(orderMapper.toDTO(orderDb));
+        } );
+
+        return orderDTOs;
+        // return orderMapper.toOrderDTOList(repository.findAll());
     }
 
     @SuppressWarnings("null")
@@ -69,7 +75,7 @@ public class OrderServiceImp implements OrderServiceInterface{
             OrderEntity orderDb = getOrder.get();
 
             orderDb.setDateOrder(order.getDateOrder());
-            orderDb.setClient(clientMapper.toEntity(order.getClient()));
+            orderDb.setClient(clientMapper.toEntitySave(order.getClient()));
             orderDb.setOrderItems(orderItemMapper.toOrderItemEntityList(order.getOrderItems()));
             orderDb.setPayment(paymentMapper.toEntity(order.getPayment()));
             orderDb.setShippingDetail(shippingDetailMapper.toEntity(order.getShippingDetail()));

@@ -12,6 +12,7 @@ public interface OrderMapper {
     
     @Mapping(target = "orderItems", ignore = true)
     OrderEntity toEntity(OrderDTO dto);
+    
     @Mapping(target = "orderItems", ignore = true)
     OrderDTO toDTO(OrderEntity entity);
 
