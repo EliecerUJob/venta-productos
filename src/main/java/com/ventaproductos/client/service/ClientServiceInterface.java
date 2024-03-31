@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ventaproductos.client.entity.ClientDTO;
+import com.ventaproductos.client.entity.ClientDTOSave;
 
 public interface ClientServiceInterface {
     
@@ -11,7 +12,7 @@ public interface ClientServiceInterface {
     Optional<ClientDTO> get(Integer id);
     void delete(Integer id);
     Optional<ClientDTO> update(Integer id, ClientDTO client);
-    Optional<ClientDTO> create(ClientDTO client);
+    Optional<ClientDTOSave> create(ClientDTOSave client);
 
     ClientDTO getByEmail(String email);
     ClientDTO getByAddress(String address);

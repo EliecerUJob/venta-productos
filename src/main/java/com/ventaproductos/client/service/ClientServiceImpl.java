@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.ventaproductos.client.entity.ClientDTO;
+import com.ventaproductos.client.entity.ClientDTOSave;
 import com.ventaproductos.client.entity.ClientEntity;
 import com.ventaproductos.client.mapper.ClientMapper;
 import com.ventaproductos.client.repository.ClientRepository;
@@ -16,8 +17,9 @@ public class ClientServiceImpl implements ClientServiceInterface{
     private ClientRepository repository;
     private ClientMapper mapper;
 
-    public ClientServiceImpl(ClientRepository repository) {
+    public ClientServiceImpl(ClientRepository repository, ClientMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     @SuppressWarnings("null")
@@ -87,10 +89,9 @@ public class ClientServiceImpl implements ClientServiceInterface{
 
     @SuppressWarnings("null")
     @Override
-    public Optional<ClientDTO> create(ClientDTO client) {
-        ClientEntity clientEntity = mapper.toEntity(client);
-        ClientEntity clienteSave = repository.save(clientEntity);
-        return Optional.of(mapper.toDTO(clienteSave));
+    public Optional<ClientDTOSave> create(ClientDTOSave client) {
+        ClientEntity clientEntity = mapper.toEntitySave(client);
+        return Optional.of(mapper.toDTOSave(repository.save(clientEntity)));
     }
     
 }
