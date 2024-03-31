@@ -13,8 +13,8 @@ public interface ShippingdetailServiceInterface {
     Optional<ShippingDetailDTO> update(Integer id, ShippingDetailDTO shippingDetail);
     void delete(Integer id);
 
-    // ShippingDetailDTO getByOrderById(Integer id);
+    ShippingDetailDTO getByOrderId(Integer id);
     List<ShippingDetailDTO> getByConveyor(String conveyor);
-    //List<ShippingDetailEntity> getByOrderByStatus(String status);  Convertir string status a enum
+    List<ShippingDetailDTO> getByOrderByStatus(String status);
 
 }

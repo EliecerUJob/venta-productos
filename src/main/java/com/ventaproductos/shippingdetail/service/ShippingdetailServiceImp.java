@@ -69,10 +69,10 @@ public class ShippingdetailServiceImp implements ShippingdetailServiceInterface{
         repository.deleteById(id);
     }
 
-    // @Override
-    // public ShippingDetailDTO getByOrderById(Integer id) {
-    //    return repository.findByOrderById(id);
-    // }
+    @Override
+    public ShippingDetailDTO getByOrderId(Integer id) {
+       return shippingDetailMapper.toDTO(repository.findByOrderId(id));
+    }
 
     @Override
     public List<ShippingDetailDTO> getByConveyor(String conveyor) {
@@ -85,11 +85,9 @@ public class ShippingdetailServiceImp implements ShippingdetailServiceInterface{
         
     }
 
-    // @Override
-    // public List<ShippingDetailEntity> getByOrderByStatus(String status) {
-    //     status = status.toUpperCase();
-    //     OrderStatusEnum statusEnum = OrderStatusEnum.valueOf(status);
-    //     return repository.findByOrderByStatus(statusEnum);
-    // }
+    @Override
+    public List<ShippingDetailDTO> getByOrderByStatus(String status) {
+        return shippingDetailMapper.toDTOList(repository.findByOrderByStatus(status));
+    }
     
 }
