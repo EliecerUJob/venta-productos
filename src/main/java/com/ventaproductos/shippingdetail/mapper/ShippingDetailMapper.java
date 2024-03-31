@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import com.ventaproductos.shippingdetail.entity.ShippingDetailDTO;
 import com.ventaproductos.shippingdetail.entity.ShippingDetailEntity;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ShippingDetailMapper {
     
     ShippingDetailDTO toDTO(ShippingDetailEntity entity);

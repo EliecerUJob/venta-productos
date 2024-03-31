@@ -10,7 +10,7 @@ import com.ventaproductos.client.entity.ClientEntity;
 import com.ventaproductos.order.entity.OrderDTO;
 import com.ventaproductos.order.entity.OrderEntity;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ClientMapper {
     
     @Mapping(target = "orders", ignore = true)

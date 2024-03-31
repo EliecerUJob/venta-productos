@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping(name = "api/v1/products")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
     private final ProductServiceImp productService;
