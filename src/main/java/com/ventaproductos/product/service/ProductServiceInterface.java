@@ -2,20 +2,20 @@ package com.ventaproductos.product.service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 import com.ventaproductos.product.entity.ProductDTO;
+import com.ventaproductos.product.entity.ProductDTOSave;
 
 public interface ProductServiceInterface {
     
-    ProductDTO create(ProductDTO product);
+    ProductDTO create(ProductDTOSave product);
     List<ProductDTO> getAll();
-    Optional<ProductDTO> get(Integer id);
-    Optional<ProductDTO> update(Integer id, ProductDTO product);
+    ProductDTO get(Integer id);
+    ProductDTO update(Integer id, ProductDTOSave product);
     void delete(Integer id);
 
     List<ProductDTO> getByNameContaining(String term);
-    List<ProductDTO> getByStock();
+    List<ProductDTO> getByStock(int quantity);
     List<ProductDTO> getByPriceAndStock(BigDecimal price, int stock);
 
 }

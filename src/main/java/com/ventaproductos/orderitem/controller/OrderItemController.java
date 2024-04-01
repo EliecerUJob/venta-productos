@@ -1,7 +1,6 @@
 package com.ventaproductos.orderitem.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ventaproductos.orderitem.entity.OrderItemDTO;
+import com.ventaproductos.orderitem.entity.OrderItemDTOSave;
+import com.ventaproductos.orderitem.entity.OrderItemDTOUpdate;
 import com.ventaproductos.orderitem.service.OrderItemServiceImp;
 
 @RestController
@@ -27,7 +28,7 @@ public class OrderItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<OrderItemDTO>> get(@PathVariable("id") Integer id){
+    public ResponseEntity<OrderItemDTO> get(@PathVariable("id") Integer id){
         return new ResponseEntity<>(orderDetail.get(id),HttpStatus.OK);
     }
 
@@ -44,14 +45,14 @@ public class OrderItemController {
     // }
 
     @PostMapping()
-    public ResponseEntity<OrderItemDTO> create(@RequestBody OrderItemDTO dto) throws Exception {
+    public ResponseEntity<OrderItemDTO> create(@RequestBody OrderItemDTOSave dto) throws Exception {
         orderDetail.create(dto);
-        return new ResponseEntity<>(dto,HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderItemDTO> update(@PathVariable("id") Integer id, @RequestBody OrderItemDTO dto) {
+    public ResponseEntity<OrderItemDTO> update(@PathVariable("id") Integer id, @RequestBody OrderItemDTOUpdate dto) {
        orderDetail.update(id, dto);
        return new ResponseEntity<>(HttpStatus.OK);
     }

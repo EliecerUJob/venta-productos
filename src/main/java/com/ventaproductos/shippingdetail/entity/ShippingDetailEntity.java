@@ -1,6 +1,8 @@
 package com.ventaproductos.shippingdetail.entity;
 
 import com.ventaproductos.order.entity.OrderEntity;
+import com.ventaproductos.product.entity.ProductEntity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,5 +26,9 @@ public class ShippingDetailEntity {
     @OneToOne
     @JoinColumn(name = "order_id")
     private OrderEntity order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private ProductEntity product;
 
 }

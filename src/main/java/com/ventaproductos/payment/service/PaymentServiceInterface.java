@@ -2,19 +2,21 @@ package com.ventaproductos.payment.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import com.ventaproductos.payment.entity.PaymentDTO;
+import com.ventaproductos.payment.entity.PaymentDTOSave;
+import com.ventaproductos.payment.entity.PaymentDTOUpdate;
+import com.ventaproductos.payment.entity.PaymentMethodEnum;
 
 public interface PaymentServiceInterface {
     
-    PaymentDTO create(PaymentDTO payment);
-    Optional<PaymentDTO> get(Integer id);
+    PaymentDTO create(PaymentDTOSave payment);
+    PaymentDTO get(Integer id);
     List<PaymentDTO> getAll();
-    Optional<PaymentDTO> update(Integer id, PaymentDTO payment);
+    PaymentDTO update(Integer id, PaymentDTOUpdate payment);
     void delete(Integer id);
 
     List<PaymentDTO> getByPaymentDateBetween(LocalDate start, LocalDate end);
-    // PaymentEntity getByOrderByIdAndPaymentMethod(Integer id, String pMethod);
+    List<PaymentDTO> getByOrderIdAndPaymentMethod(Integer id, PaymentMethodEnum pMethod);
 
 }

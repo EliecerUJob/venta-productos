@@ -1,20 +1,20 @@
 package com.ventaproductos.orderitem.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.ventaproductos.orderitem.entity.OrderItemDTO;
-import com.ventaproductos.product.entity.ProductDTO;
+import com.ventaproductos.orderitem.entity.OrderItemDTOSave;
+import com.ventaproductos.orderitem.entity.OrderItemDTOUpdate;
 
 public interface OrderItemServiceInterface {
     
-    OrderItemDTO create(OrderItemDTO oItem);
-    Optional<OrderItemDTO> get(Integer id);
+    OrderItemDTO create(OrderItemDTOSave oItem);
+    OrderItemDTO get(Integer id);
     List<OrderItemDTO> getAll();
-    Optional<OrderItemDTO> update(Integer id, OrderItemDTO oItem);
+    OrderItemDTO update(Integer id, OrderItemDTOUpdate oItem);
     void delete(Integer id);
 
-    // OrderItemDTO getByOrderById(OrderEntity order, Integer id);
-    List<OrderItemDTO> findByProduct(ProductDTO product);
+    List<OrderItemDTO> getOrderItemsdByProductId(Integer product);
+    List<OrderItemDTO> getOrderItemsByOrderId(Integer id);
     
 }

@@ -8,6 +8,6 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Integer> {
 
     ClientEntity findByEmail(String email);
     ClientEntity findByAddress(String email);
-    List<ClientEntity> findAllByName(String name);
+    List<ClientEntity> findByNameStartingWith(String name);
     
 }

@@ -1,14 +1,20 @@
-package com.ventaproductos.client.entity;
+package com.ventaproductos.product.entity;
+
+import java.math.BigDecimal;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record ClientDTOSave (
+public record ProductDTOSave(
+
     @NotNull(message = "required field")
-    String name, 
+    String name,
     @NotNull(message = "required field")
-    String email, 
+    BigDecimal  price,
     @NotNull(message = "required field")
-    String address
-){}
+    int stock
+
+) {
+    
+}

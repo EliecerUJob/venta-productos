@@ -5,11 +5,14 @@ import java.util.*;
 
 import org.springframework.stereotype.Service;
 
-import com.ventaproductos.client.entity.ClientDTO;
 import com.ventaproductos.client.entity.ClientEntity;
 import com.ventaproductos.client.mapper.ClientMapper;
+import com.ventaproductos.client.repository.ClientRepository;
 import com.ventaproductos.order.entity.OrderDTO;
+import com.ventaproductos.order.entity.OrderDTORecuperate;
+import com.ventaproductos.order.entity.OrderDTOSave;
 import com.ventaproductos.order.entity.OrderEntity;
+import com.ventaproductos.order.entity.OrderStatusEnum;
 import com.ventaproductos.order.mapper.OrderMapper;
 import com.ventaproductos.order.repository.OrderRepository;
 import com.ventaproductos.orderitem.mapper.OrderItemMapper;
@@ -19,28 +22,28 @@ import com.ventaproductos.shippingdetail.mapper.ShippingDetailMapper;
 @Service
 public class OrderServiceImp implements OrderServiceInterface{
 
-    private OrderRepository repository;
+    private OrderRepository orderRepository;
+    private ClientRepository clientRepository;
     private OrderMapper orderMapper;
-    private ClientMapper clientMapper;
-    private OrderItemMapper orderItemMapper;
-    private PaymentMapper paymentMapper;
-    private ShippingDetailMapper shippingDetailMapper;
-    
 
-    public OrderServiceImp(OrderRepository repository, OrderMapper orderMapper, ClientMapper clientMapper,
-            OrderItemMapper orderItemMapper, PaymentMapper paymentMapper, ShippingDetailMapper shippingDetailMapper) {
-        this.repository = repository;
+    public OrderServiceImp(
+            OrderRepository orderRepository, 
+            OrderMapper orderMapper, 
+            ClientMapper clientMapper,
+            OrderItemMapper orderItemMapper, 
+            PaymentMapper paymentMapper, 
+            ShippingDetailMapper shippingDetailMapper,
+            ClientRepository clientRepository
+        ) {
+        this.orderRepository = orderRepository;
+        this.clientRepository = clientRepository;
         this.orderMapper = orderMapper;
-        this.clientMapper = clientMapper;
-        this.orderItemMapper = orderItemMapper;
-        this.paymentMapper = paymentMapper;
-        this.shippingDetailMapper = shippingDetailMapper;
     }
 
     @SuppressWarnings("null")
     @Override
     public Optional<OrderDTO> get(Integer id) {
-        Optional<OrderEntity> orderEntity = repository.findById(id);
+        Optional<OrderEntity> orderEntity = orderRepository.findById(id);
         if (orderEntity.isPresent()) {
             OrderEntity orderToDTO = orderEntity.get();
             return Optional.of(orderMapper.toDTO(orderToDTO));
@@ -51,61 +54,59 @@ public class OrderServiceImp implements OrderServiceInterface{
     @Override
     public List<OrderDTO> getAll() {
         List<OrderDTO> orderDTOs = new ArrayList<>();
-        repository.findAll().stream().forEach( orderDb -> {
+        orderRepository.findAll().stream().forEach( orderDb -> {
             orderDTOs.add(orderMapper.toDTO(orderDb));
         } );
 
         return orderDTOs;
-        // return orderMapper.toOrderDTOList(repository.findAll());
     }
 
     @SuppressWarnings("null")
     @Override
     public void delete(Integer id) {
-        repository.deleteById(id);
+        orderRepository.deleteById(id);
     }
 
     @Override
     @SuppressWarnings("null")
-    public Optional<OrderDTO> update(Integer id, OrderDTO order) {
-        Optional<OrderEntity> getOrder = repository.findById(id);
-
-        if (getOrder.isPresent()) {
-
-            OrderEntity orderDb = getOrder.get();
-
-            orderDb.setDateOrder(order.getDateOrder());
-            orderDb.setClient(clientMapper.toEntitySave(order.getClient()));
-            orderDb.setOrderItems(orderItemMapper.toOrderItemEntityList(order.getOrderItems()));
-            orderDb.setPayment(paymentMapper.toEntity(order.getPayment()));
-            orderDb.setShippingDetail(shippingDetailMapper.toEntity(order.getShippingDetail()));
-
-            orderDb.setStatus(order.getStatus());
+    public OrderDTO update(Integer id, OrderDTOSave order) {
+        ClientEntity clientEntity = clientRepository.findById(order.clientId()).orElseThrow();
         
-            OrderEntity updateOrder = repository.save(orderDb);
-            return Optional.of(orderMapper.toDTO(updateOrder));
+        return orderRepository.findById(id).map( orderDb -> {
 
-        }
+            orderDb.setClient(clientEntity);
+            orderDb.setDateOrder(order.dateOrder());
+            orderDb.setStatus(order.status());
+            
+            orderRepository.save(orderDb);
+            return orderMapper.toDTO(orderDb);
 
-        return Optional.empty();
+        }).orElseThrow();
     }
 
     @SuppressWarnings("null")
     @Override
-    public OrderDTO create(OrderDTO order) {
+    public OrderDTO create(OrderDTOSave order) {
         OrderEntity orderEntity = orderMapper.toEntity(order);
-        return orderMapper.toDTO(repository.save(orderEntity));
+        return orderMapper.toDTO(orderRepository.save(orderEntity));
     }
 
     @Override
     public List<OrderDTO> getByDateOrderBetween(LocalDate start, LocalDate end) {
-        return orderMapper.toOrderDTOList(repository.findByDateOrderBetween(start, end));
+        var orders = orderRepository.findByDateOrderBetween(start, end);
+        return orders.stream().map(orderMapper::toDTO).toList();
     }
 
     @Override
-    public List<OrderDTO> getByClientAndStatus(ClientDTO client, String status) {
-        ClientEntity clientEntity = clientMapper.toEntity(client);
-        return orderMapper.toOrderDTOList(repository.findByClientAndStatus(clientEntity, status));
+    public List<OrderDTO> getOrderByClientIdAndStatus(Integer clientId, OrderStatusEnum status) {
+        var orders = orderRepository.findByClientIdAndStatus(clientId, status);
+        return orders.stream().map(orderMapper::toDTO).toList();
+    }
+
+    @Override
+    public List<OrderDTORecuperate> getOrdersByRecuperateOrderWithItemsByCustomer(Integer clientId){
+        var orders = orderRepository.recuperateOrderWithItemsByCustomer(clientId);
+        return orders;
     }
 
 }

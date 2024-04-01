@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @Setter
@@ -28,16 +27,8 @@ public class OrderItemEntity {
     @JoinColumn(name = "order_id", unique = true)
     private OrderEntity order;
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private ProductEntity product;
-
-    @ManyToMany
-    @JoinTable(
-            name = "order_item_product",
-            joinColumns = @JoinColumn(name = "order_item_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<ProductEntity> products;
 
 }

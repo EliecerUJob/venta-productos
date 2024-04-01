@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ventaproductos.payment.entity.PaymentDTO;
+import com.ventaproductos.payment.entity.PaymentDTOSave;
+import com.ventaproductos.payment.entity.PaymentDTOUpdate;
 import com.ventaproductos.payment.service.PaymentServiceImp;
 
 @RestController
@@ -34,7 +36,7 @@ public class PaymentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<PaymentDTO>> get(@PathVariable("id") Integer id){
+    public ResponseEntity<PaymentDTO> get(@PathVariable("id") Integer id){
         return new ResponseEntity<>(paymentService.get(id), HttpStatus.OK);
     }
 
@@ -45,13 +47,13 @@ public class PaymentController {
     }
 
     @PostMapping()
-    public ResponseEntity<PaymentDTO> create(@RequestBody PaymentDTO dto) throws Exception {
+    public ResponseEntity<PaymentDTO> create(@RequestBody PaymentDTOSave dto) throws Exception {
         paymentService.create(dto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PaymentDTO> update(@PathVariable("id") Integer id, @RequestBody PaymentDTO dto) {
+    public ResponseEntity<PaymentDTO> update(@PathVariable("id") Integer id, @RequestBody PaymentDTOUpdate dto) {
         paymentService.update(id, dto);
         return new ResponseEntity<>(HttpStatus.OK);
     } 

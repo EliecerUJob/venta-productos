@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ventaproductos.order.entity.OrderDTO;
+import com.ventaproductos.order.entity.OrderDTOSave;
 import com.ventaproductos.order.service.OrderServiceImp;
 
 import java.time.LocalDate;
@@ -19,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-
-
-
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -49,13 +47,13 @@ public class OrderController {
     }
     
     @PostMapping()
-    public ResponseEntity<Optional<OrderDTO>> create(@RequestBody OrderDTO order) {
+    public ResponseEntity<Optional<OrderDTO>> create(@RequestBody OrderDTOSave order) {
         orderService.create(order);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderDTO> update(@PathVariable("id") Integer id, @RequestBody OrderDTO Dto) {
+    public ResponseEntity<OrderDTO> update(@PathVariable("id") Integer id, @RequestBody OrderDTOSave Dto) {
         orderService.update(id, Dto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

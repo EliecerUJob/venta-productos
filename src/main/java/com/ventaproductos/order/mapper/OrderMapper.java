@@ -1,22 +1,17 @@
 package com.ventaproductos.order.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import java.util.List;
 
 import com.ventaproductos.order.entity.OrderDTO;
+import com.ventaproductos.order.entity.OrderDTORecuperate;
+import com.ventaproductos.order.entity.OrderDTOSave;
 import com.ventaproductos.order.entity.OrderEntity;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
     
-    @Mapping(target = "orderItems", ignore = true)
-    OrderEntity toEntity(OrderDTO dto);
-    
-    @Mapping(target = "orderItems", ignore = true)
+    OrderEntity toEntity(OrderDTOSave dto);
     OrderDTO toDTO(OrderEntity entity);
-
-    List<OrderDTO> toOrderDTOList(List<OrderEntity> orderEntityList);
-    List<OrderEntity> toOrderEntityList(List<OrderDTO> orderDTOList);
-
+    OrderDTORecuperate toDTORecuperate(OrderEntity entity);
+    
 }

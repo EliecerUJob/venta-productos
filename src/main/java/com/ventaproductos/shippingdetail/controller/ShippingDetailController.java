@@ -1,7 +1,6 @@
 package com.ventaproductos.shippingdetail.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ventaproductos.shippingdetail.entity.ShippingDetailDTO;
+import com.ventaproductos.shippingdetail.entity.ShippingDetailDTOSave;
+import com.ventaproductos.shippingdetail.entity.ShippingDetailDTOUpdate;
 import com.ventaproductos.shippingdetail.service.ShippingdetailServiceImp;
 
 @RestController
@@ -27,7 +28,7 @@ public class ShippingDetailController {
     }
 
     @GetMapping("/{id} ")
-    public ResponseEntity<Optional<ShippingDetailDTO>> get(@PathVariable("id") Integer id){
+    public ResponseEntity<ShippingDetailDTO> get(@PathVariable("id") Integer id){
         return new ResponseEntity<>(shippingDetail.get(id),HttpStatus.OK);
     }
 
@@ -37,7 +38,7 @@ public class ShippingDetailController {
     }
 
     @GetMapping("/{orderId} ")
-    public ResponseEntity<ShippingDetailDTO> getByOrderId(@PathVariable("orderId") Integer orderId){
+    public ResponseEntity<List<ShippingDetailDTO>> getByOrderId(@PathVariable("orderId") Integer orderId){
         return new ResponseEntity<>(shippingDetail.getByOrderId(orderId),HttpStatus.OK);
     }
 
@@ -47,15 +48,15 @@ public class ShippingDetailController {
     }
 
     @PostMapping()
-    public ResponseEntity<ShippingDetailDTO> create(@RequestBody ShippingDetailDTO dto) throws Exception{
+    public ResponseEntity<ShippingDetailDTO> create(@RequestBody ShippingDetailDTOSave dto) throws Exception{
         shippingDetail.create(dto);
-        return new ResponseEntity<>(dto,HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ShippingDetailDTO> update(@PathVariable("id") Integer id, @RequestBody ShippingDetailDTO dto) {
+    public ResponseEntity<ShippingDetailDTO> update(@PathVariable("id") Integer id, @RequestBody ShippingDetailDTOUpdate dto) {
         shippingDetail.update(id, dto);
-        return new ResponseEntity<>(dto,HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

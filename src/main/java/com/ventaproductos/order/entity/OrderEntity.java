@@ -27,8 +27,7 @@ public class OrderEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum status;
 
-    // Foreign keys
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private ClientEntity client;
 

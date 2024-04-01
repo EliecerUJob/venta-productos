@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ventaproductos.product.entity.ProductDTO;
+import com.ventaproductos.product.entity.ProductDTOSave;
 import com.ventaproductos.product.service.ProductServiceImp;
 
 import org.springframework.http.HttpStatus;
@@ -30,12 +31,12 @@ public class ProductController {
     }
 
     @GetMapping("/instock")
-    public ResponseEntity<List<ProductDTO>> getByStock() {
-        return new ResponseEntity<>(productService.getByStock(), HttpStatus.OK);
+    public ResponseEntity<List<ProductDTO>> getByStock(int quantity) {
+        return new ResponseEntity<>(productService.getByStock(quantity), HttpStatus.OK);
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ProductDTO>> get(@PathVariable("id") Integer id) {
+    public ResponseEntity<ProductDTO> get(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(productService.get(id), HttpStatus.OK);
     }
 
@@ -49,8 +50,14 @@ public class ProductController {
         return new ResponseEntity<>(productService.getByPriceAndStock(price, stock), HttpStatus.OK);
     }
 
+    @GetMapping()
+    public ResponseEntity<List<ProductDTO>> getAll() {
+        return new ResponseEntity<List<ProductDTO>>(productService.getAll(), HttpStatus.OK);
+    }
+    
+
     @PostMapping()
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO dto) throws Exception {
+    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTOSave dto) {
         productService.create(dto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -62,7 +69,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable("id") Integer id, @RequestBody ProductDTO dto) {
+    public ResponseEntity<ProductDTO> update(@PathVariable("id") Integer id, @RequestBody ProductDTOSave dto) {
         productService.update(id, dto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
