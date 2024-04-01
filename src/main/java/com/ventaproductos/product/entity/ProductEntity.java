@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @Setter
@@ -24,7 +23,7 @@ public class ProductEntity {
     private BigDecimal price;
     private int stock;
 
-    @ManyToMany(mappedBy = "products")
-    private List<OrderItemEntity>orderItems;
+    @OneToOne(mappedBy = "product")
+    private OrderItemEntity orderItem;
 
 }

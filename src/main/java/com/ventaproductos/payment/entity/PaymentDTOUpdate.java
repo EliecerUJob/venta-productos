@@ -1,14 +1,20 @@
-package com.ventaproductos.client.entity;
+package com.ventaproductos.payment.entity;
+
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record ClientDTOSave (
+public record PaymentDTOUpdate(
+
     @NotNull(message = "required field")
-    String name, 
+    Integer orderId,
     @NotNull(message = "required field")
-    String email, 
+    LocalDate paymentDate,
     @NotNull(message = "required field")
-    String address
-){}
+    PaymentMethodEnum paymentMethod
+
+) {
+    
+}

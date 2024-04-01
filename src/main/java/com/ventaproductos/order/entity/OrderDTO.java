@@ -1,28 +1,27 @@
 package com.ventaproductos.order.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Builder;
 
 import java.time.LocalDate;
 import java.util.*;
 
-import com.ventaproductos.client.entity.ClientDTO;
 import com.ventaproductos.orderitem.entity.OrderItemDTO;
 import com.ventaproductos.payment.entity.PaymentDTO;
 import com.ventaproductos.shippingdetail.entity.ShippingDetailDTO;
 
-@Getter
-@Setter
-public class OrderDTO {
+@Builder
+public record OrderDTO(
+    Integer id,
+    LocalDate dateOrder,
+    OrderStatusEnum status,
+    Integer clientId,
+    List<OrderItemDTO> orderItems,
+    PaymentDTO payment,
+    ShippingDetailDTO shippingDetail
+) {
     
-    private Integer id;
-    private LocalDate dateOrder;
-    private OrderStatusEnum status;
-
-    private ClientDTO client;
-
-    private List<OrderItemDTO> orderItems;
-    private PaymentDTO payment;
-    private ShippingDetailDTO shippingDetail;
+    public List<OrderItemDTO> orderItems(){
+        return Collections.unmodifiableList(orderItems);
+    }
 
 }

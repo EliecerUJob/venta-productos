@@ -20,10 +20,7 @@ public class ClientEntity {
     private String email;
     private String address;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private List<OrderEntity> orders;
 
 }
-
-
-//función que altera una clase dentro del código

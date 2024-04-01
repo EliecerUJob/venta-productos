@@ -55,7 +55,7 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<ClientDTO>> update(@PathVariable("id") Integer id, @RequestBody ClientDTO dto){
+    public ResponseEntity<ClientDTO> update(@PathVariable("id") Integer id, @RequestBody ClientDTOSave dto){
         clientService.update(id, dto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

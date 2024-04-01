@@ -41,7 +41,7 @@ public class ClientServiceImpl implements ClientServiceInterface{
     @Override
     public List<ClientDTO> getAllByName(String name) {
         List<ClientDTO> nameDTOList = new ArrayList<>();
-        repository.findAllByName(name).stream().forEach( client -> {
+        repository.findByNameStartingWith(name).stream().forEach( client -> {
             nameDTOList.add(mapper.toDTO(client));
         } );
         return nameDTOList;
@@ -70,28 +70,25 @@ public class ClientServiceImpl implements ClientServiceInterface{
 
     @SuppressWarnings("null")
     @Override
-    public Optional<ClientDTO> update(Integer id, ClientDTO client) {
-        Optional<ClientEntity> getClient = repository.findById(id);
-        if (getClient.isPresent()) {
-            ClientEntity clientDb = getClient.get();
-            clientDb.setName(client.getName());
-            clientDb.setEmail(client.getEmail());
-            clientDb.setAddress(client.getAddress());
+    public ClientDTO update(Integer id, ClientDTOSave client) {
+        
+        return repository.findById(id).map( clientDb -> {
+            clientDb.setName(client.name());
+            clientDb.setEmail(client.email());
+            clientDb.setAddress(client.address());
 
-            ClientEntity updateCliente = repository.save(clientDb);
-
-            return Optional.of(mapper.toDTO(updateCliente));
-        }
-
-        return Optional.empty();
+            repository.save(clientDb);
+            return mapper.toDTO(clientDb);
+        } ).orElseThrow();
 
     }
 
     @SuppressWarnings("null")
     @Override
-    public Optional<ClientDTOSave> create(ClientDTOSave client) {
-        ClientEntity clientEntity = mapper.toEntitySave(client);
-        return Optional.of(mapper.toDTOSave(repository.save(clientEntity)));
+    public ClientDTO create(ClientDTOSave client) {
+        ClientEntity clientEntity = mapper.toEntity(client);
+        repository.save(clientEntity);
+        return mapper.toDTO(clientEntity);
     }
     
 }

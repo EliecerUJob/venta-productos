@@ -6,6 +6,7 @@ import java.util.*;
 import org.springframework.stereotype.Service;
 
 import com.ventaproductos.product.entity.ProductDTO;
+import com.ventaproductos.product.entity.ProductDTOSave;
 import com.ventaproductos.product.entity.ProductEntity;
 import com.ventaproductos.product.mapper.ProductMapper;
 import com.ventaproductos.product.repository.ProductRepository;
@@ -23,34 +24,35 @@ public class ProductServiceImp implements ProductServiceInterface{
 
     @SuppressWarnings("null")
     @Override
-    public ProductDTO create(ProductDTO product) {
+    public ProductDTO create(ProductDTOSave product) {
         ProductEntity productEntity = productMapper.toEntity(product);
         return productMapper.toDTO(repository.save(productEntity));
     }
 
     @Override
     public List<ProductDTO> getAll() {
-        return productMapper.toProductDTOList(repository.findAll());
+        var productList = repository.findAll();
+        return productList.stream().map( productMapper::toDTO ).toList();
     }
 
     @SuppressWarnings("null")
     @Override
-    public Optional<ProductDTO> get(Integer id) {
+    public ProductDTO get(Integer id) {
         ProductEntity productEntity = repository.findById(id).get();
-        return Optional.of(productMapper.toDTO(productEntity));
+        return productMapper.toDTO(productEntity);
     }
 
     @SuppressWarnings("null")
     @Override
-    public Optional<ProductDTO> update(Integer id, ProductDTO product) {
+    public ProductDTO update(Integer id, ProductDTOSave product) {
         return repository.findById(id).map( productDb -> {
 
-            productDb.setName(product.getName());
-            productDb.setPrice(product.getPrice());
-            productDb.setStock(product.getStock());
+            productDb.setName(product.name());
+            productDb.setPrice(product.price());
+            productDb.setStock(product.stock());
 
             return productMapper.toDTO(repository.save(productDb));
-        });
+        }).orElseThrow();
     }
 
     @SuppressWarnings("null")
@@ -61,26 +63,20 @@ public class ProductServiceImp implements ProductServiceInterface{
 
     @Override
     public List<ProductDTO> getByNameContaining(String term) {
-        return productMapper.toProductDTOList(repository.findByNameContaining(term));
+        var productList = repository.findByNameContaining(term);
+        return productList.stream().map( productMapper::toDTO ).toList();
     }
 
     @Override
-    public List<ProductDTO> getByStock() {
-        // List<ProductDTO> productInStockDtoList = new ArrayList<>();
-        // repository.findAll().stream().forEach( product -> {
-        //     if (product.getStock() >= 0) {
-        //         productInStockDtoList.add(productMapper.toDTO(product));
-        //     }
-        // });
-
-        // return productInStockDtoList;
-
-        return productMapper.toProductDTOList(repository.searchByStock());
+    public List<ProductDTO> getByStock(int quantity) {
+        var productList = repository.findByStockGreaterThan(quantity);
+        return productList.stream().map( productMapper::toDTO ).toList();
     }
 
     @Override
     public List<ProductDTO> getByPriceAndStock(BigDecimal price, int stock) {
-        return productMapper.toProductDTOList(repository.findByPriceAndStock(price, stock));
+        var productList = repository.findByPriceLessThanAndStockLessThan(price, stock);
+        return productList.stream().map( productMapper::toDTO ).toList();
     }
     
 }

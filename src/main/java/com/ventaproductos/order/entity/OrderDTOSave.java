@@ -1,14 +1,18 @@
-package com.ventaproductos.client.entity;
+package com.ventaproductos.order.entity;
+
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record ClientDTOSave (
+public record OrderDTOSave(
     @NotNull(message = "required field")
-    String name, 
+    LocalDate dateOrder,
     @NotNull(message = "required field")
-    String email, 
+    OrderStatusEnum status,
     @NotNull(message = "required field")
-    String address
-){}
+    Integer clientId
+) {
+    
+}

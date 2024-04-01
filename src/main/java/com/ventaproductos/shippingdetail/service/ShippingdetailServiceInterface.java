@@ -1,20 +1,21 @@
 package com.ventaproductos.shippingdetail.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.ventaproductos.shippingdetail.entity.ShippingDetailDTO;
+import com.ventaproductos.shippingdetail.entity.ShippingDetailDTOSave;
+import com.ventaproductos.shippingdetail.entity.ShippingDetailDTOUpdate;
 
 public interface ShippingdetailServiceInterface {
 
-    ShippingDetailDTO create(ShippingDetailDTO shippingDetail);
+    ShippingDetailDTO create(ShippingDetailDTOSave shippingDetail);
     List<ShippingDetailDTO> getAll();
-    Optional<ShippingDetailDTO> get(Integer id);
-    Optional<ShippingDetailDTO> update(Integer id, ShippingDetailDTO shippingDetail);
+    ShippingDetailDTO get(Integer id);
+    ShippingDetailDTO update(Integer id, ShippingDetailDTOUpdate shippingDetail);
     void delete(Integer id);
 
-    ShippingDetailDTO getByOrderId(Integer id);
+    List<ShippingDetailDTO> getByOrderId(Integer id);
+    List<ShippingDetailDTO> getByOrderStatus(String status);
     List<ShippingDetailDTO> getByConveyor(String conveyor);
-    List<ShippingDetailDTO> getByOrderByStatus(String status);
 
 }

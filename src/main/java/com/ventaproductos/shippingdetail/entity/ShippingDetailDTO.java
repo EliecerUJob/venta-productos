@@ -1,19 +1,16 @@
 package com.ventaproductos.shippingdetail.entity;
 
-import com.ventaproductos.order.entity.OrderDTO;
+import lombok.Builder;
 
-import lombok.Getter;
-import lombok.Setter;
+@Builder
+public record ShippingDetailDTO(
 
-@Getter
-@Setter
-public class ShippingDetailDTO {
-    
-    private Integer id;
-    private String address;
-    private String conveyor;
-    private int guideNumber;
+    Integer id,
+    Integer orderId,
+    String address,
+    String conveyor,
+    int guideNumber,
+    Integer productId
 
-    private OrderDTO order;
-
+) {
 }
