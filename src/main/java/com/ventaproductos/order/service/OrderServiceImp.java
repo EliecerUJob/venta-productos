@@ -9,7 +9,6 @@ import com.ventaproductos.client.entity.ClientEntity;
 import com.ventaproductos.client.mapper.ClientMapper;
 import com.ventaproductos.client.repository.ClientRepository;
 import com.ventaproductos.order.entity.OrderDTO;
-import com.ventaproductos.order.entity.OrderDTORecuperate;
 import com.ventaproductos.order.entity.OrderDTOSave;
 import com.ventaproductos.order.entity.OrderEntity;
 import com.ventaproductos.order.entity.OrderStatusEnum;
@@ -53,12 +52,8 @@ public class OrderServiceImp implements OrderServiceInterface{
 
     @Override
     public List<OrderDTO> getAll() {
-        List<OrderDTO> orderDTOs = new ArrayList<>();
-        orderRepository.findAll().stream().forEach( orderDb -> {
-            orderDTOs.add(orderMapper.toDTO(orderDb));
-        } );
-
-        return orderDTOs;
+        var orderList = orderRepository.findAll();
+        return orderList.stream().map(orderMapper::toDTO).toList();
     }
 
     @SuppressWarnings("null")
@@ -87,8 +82,16 @@ public class OrderServiceImp implements OrderServiceInterface{
     @SuppressWarnings("null")
     @Override
     public OrderDTO create(OrderDTOSave order) {
-        OrderEntity orderEntity = orderMapper.toEntity(order);
-        return orderMapper.toDTO(orderRepository.save(orderEntity));
+        ClientEntity clientEntity = clientRepository.findById(order.clientId()).orElseThrow();
+        Integer clientId = clientEntity.getId();
+        System.out.println(clientId);
+        OrderDTOSave orderDTO = OrderDTOSave.builder()
+                    .clientId(clientId)
+                    .dateOrder(order.dateOrder())
+                    .status(order.status())
+                    .build();
+        var orderToSave = orderRepository.save(orderMapper.toEntity(orderDTO));
+        return orderMapper.toDTO(orderToSave);
     }
 
     @Override
@@ -103,10 +106,10 @@ public class OrderServiceImp implements OrderServiceInterface{
         return orders.stream().map(orderMapper::toDTO).toList();
     }
 
-    @Override
-    public List<OrderDTORecuperate> getOrdersByRecuperateOrderWithItemsByCustomer(Integer clientId){
-        var orders = orderRepository.recuperateOrderWithItemsByCustomer(clientId);
-        return orders;
-    }
+    // @Override
+    // public List<OrderDTORecuperate> getOrdersByRecuperateOrderWithItemsByClient(Integer clientId){
+    //     List<Object[]> orders = orderRepository.recuperateOrderWithItemsByCustomer(clientId);
+    //     return orderMapper.toDTO(orders);
+    // }
 
 }

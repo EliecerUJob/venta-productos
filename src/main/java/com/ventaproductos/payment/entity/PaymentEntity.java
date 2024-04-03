@@ -4,7 +4,6 @@ import com.ventaproductos.order.entity.OrderEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -19,7 +18,7 @@ public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private BigDecimal totalPayment;
+    private double totalPayment;
     private LocalDate paymentDate;
     @Enumerated(EnumType.STRING)
     private PaymentMethodEnum paymentMethod;

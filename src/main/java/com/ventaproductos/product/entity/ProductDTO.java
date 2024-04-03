@@ -1,7 +1,6 @@
 package com.ventaproductos.product.entity;
 
 import lombok.Builder;
-import java.math.*;
 
 import com.ventaproductos.orderitem.entity.OrderItemDTO;
 
@@ -11,7 +10,7 @@ public record ProductDTO(
     Integer id,
     String name,
     int stock,
-    BigDecimal price,
+    double price,
     OrderItemDTO orderItem
     
 ) {

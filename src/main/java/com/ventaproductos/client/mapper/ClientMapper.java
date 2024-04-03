@@ -11,7 +11,7 @@ import com.ventaproductos.client.entity.ClientEntity;
 public interface ClientMapper {
     
     ClientEntity toEntity(ClientDTOSave dto);
-
+    
     ClientDTO toDTO(ClientEntity clientToDTO);
 
 }

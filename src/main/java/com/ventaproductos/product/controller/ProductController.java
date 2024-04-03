@@ -1,7 +1,6 @@
 package com.ventaproductos.product.controller;
 
 import java.util.*;
-import java.math.*;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +45,7 @@ public class ProductController {
     }
     
     @GetMapping("/priceandstock")
-    public ResponseEntity<List<ProductDTO>> getByPriceAndStock(@RequestParam BigDecimal price, @RequestParam int stock) {
+    public ResponseEntity<List<ProductDTO>> getByPriceAndStock(@RequestParam double price, @RequestParam int stock) {
         return new ResponseEntity<>(productService.getByPriceAndStock(price, stock), HttpStatus.OK);
     }
 

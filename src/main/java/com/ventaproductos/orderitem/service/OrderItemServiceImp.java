@@ -103,6 +103,11 @@ public class OrderItemServiceImp implements OrderItemServiceInterface{
 
     }
 
+    @Override
+    public Double sumTotalSalesByProduct(Integer productId) {
+        return orderItemRepository.sumTotalSalesByProduct(productId);
+    }
+
     
     
 }

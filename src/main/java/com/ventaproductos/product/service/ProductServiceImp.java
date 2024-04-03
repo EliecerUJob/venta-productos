@@ -1,6 +1,5 @@
 package com.ventaproductos.product.service;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import org.springframework.stereotype.Service;
@@ -74,7 +73,7 @@ public class ProductServiceImp implements ProductServiceInterface{
     }
 
     @Override
-    public List<ProductDTO> getByPriceAndStock(BigDecimal price, int stock) {
+    public List<ProductDTO> getByPriceAndStock(double price, int stock) {
         var productList = repository.findByPriceLessThanAndStockLessThan(price, stock);
         return productList.stream().map( productMapper::toDTO ).toList();
     }

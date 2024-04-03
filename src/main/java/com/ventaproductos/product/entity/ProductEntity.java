@@ -5,8 +5,6 @@ import com.ventaproductos.orderitem.entity.OrderItemEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,7 +18,7 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private BigDecimal price;
+    private double price;
     private int stock;
 
     @OneToOne(mappedBy = "product")

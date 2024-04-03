@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ventaproductos.order.entity.OrderDTO;
-import com.ventaproductos.order.entity.OrderDTORecuperate;
 import com.ventaproductos.order.entity.OrderDTOSave;
 import com.ventaproductos.order.entity.OrderStatusEnum;
 
@@ -19,6 +18,6 @@ public interface OrderServiceInterface {
 
     List<OrderDTO> getByDateOrderBetween(LocalDate start, LocalDate end);
     List<OrderDTO> getOrderByClientIdAndStatus(Integer clientId, OrderStatusEnum status);
-    List<OrderDTORecuperate> getOrdersByRecuperateOrderWithItemsByCustomer(Integer clientId);
+    // List<OrderDTORecuperate> getOrdersByRecuperateOrderWithItemsByClient(Integer clientId);
 
 }
