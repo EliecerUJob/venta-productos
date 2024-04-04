@@ -21,7 +21,6 @@ public class TestProductRepository extends AbstractIntegrationTest{
         this.productRepository = productRepository;
     }
 
-    @SuppressWarnings("null")
     void init(){
 
         ProductEntity product = ProductEntity.builder()

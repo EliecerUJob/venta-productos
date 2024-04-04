@@ -36,11 +36,9 @@ public class TestOrderRepository extends AbstractIntegrationTest{
         this.productRepository = productRepository;
     }
 
-    @SuppressWarnings("null")
     List<OrderEntity> init(){
 
         ClientEntity client = ClientEntity.builder()
-                    .id(1)
                     .name("Sergio A")
                     .email("salmazo@gmail.com")
                     .address("Parques de bolivar")
@@ -118,15 +116,15 @@ public class TestOrderRepository extends AbstractIntegrationTest{
         assertEquals(0, orders.size());
     }
 
-    // @Test
-    // void givenOrder_whenRecuperateOrderWithItemsByCustomer_thenReturnOrder(){
-    //     //Given
-    //     var listClient = init();
-    //     Integer id = listClient.get(0).getClient().getId();
-    //     //When
-    //     List<Object[]> orders = orderRepository.recuperateOrderWithItemsByCustomer(id);
-    //     //Then
-    //     assertEquals(1, orders.size());
-    // }
+    @Test
+    void givenOrder_whenRecuperateOrderWithItemsByCustomer_thenReturnOrder(){
+        //Given
+        var listClient = init();
+        Integer id = listClient.get(0).getClient().getId();
+        //When
+        List<Object[]> orders = orderRepository.recuperateOrderWithItemsByCustomer(id);
+        //Then
+        assertEquals(1, orders.size());
+    }
 
 }

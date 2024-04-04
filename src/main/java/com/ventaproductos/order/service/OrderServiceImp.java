@@ -39,7 +39,6 @@ public class OrderServiceImp implements OrderServiceInterface{
         this.orderMapper = orderMapper;
     }
 
-    @SuppressWarnings("null")
     @Override
     public Optional<OrderDTO> get(Integer id) {
         Optional<OrderEntity> orderEntity = orderRepository.findById(id);
@@ -56,14 +55,12 @@ public class OrderServiceImp implements OrderServiceInterface{
         return orderList.stream().map(orderMapper::toDTO).toList();
     }
 
-    @SuppressWarnings("null")
     @Override
     public void delete(Integer id) {
         orderRepository.deleteById(id);
     }
 
     @Override
-    @SuppressWarnings("null")
     public OrderDTO update(Integer id, OrderDTOSave order) {
         ClientEntity clientEntity = clientRepository.findById(order.clientId()).orElseThrow();
         
@@ -79,7 +76,6 @@ public class OrderServiceImp implements OrderServiceInterface{
         }).orElseThrow();
     }
 
-    @SuppressWarnings("null")
     @Override
     public OrderDTO create(OrderDTOSave order) {
         ClientEntity clientEntity = clientRepository.findById(order.clientId()).orElseThrow();

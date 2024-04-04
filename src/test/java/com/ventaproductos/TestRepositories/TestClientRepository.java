@@ -21,7 +21,6 @@ public class TestClientRepository extends AbstractIntegrationTest{
         this.clientRepository = clientRepository;
     }
 
-    @SuppressWarnings("null")
     void init(){
 
         ClientEntity client = ClientEntity.builder()

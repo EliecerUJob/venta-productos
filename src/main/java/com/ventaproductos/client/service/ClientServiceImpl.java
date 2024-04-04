@@ -1,10 +1,10 @@
 package com.ventaproductos.client.service;
 
 import java.util.*;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.ventaproductos.Exceptions.ClientNotFoundException;
 import com.ventaproductos.client.entity.ClientDTO;
 import com.ventaproductos.client.entity.ClientDTOSave;
 import com.ventaproductos.client.entity.ClientEntity;
@@ -22,15 +22,16 @@ public class ClientServiceImpl implements ClientServiceInterface{
         this.mapper = mapper;
     }
 
-    @SuppressWarnings("null")
     @Override
     public void delete(Integer id) {
-        repository.deleteById(id);
+        ClientEntity entity = repository.findById(id).orElseThrow(ClientNotFoundException::new);
+        repository.delete(entity);
     }
 
     @Override
     public ClientDTO getByEmail(String email) {
-        return mapper.toDTO(repository.findByEmail(email));
+        ClientEntity entity = repository.findByEmail(email);
+        return mapper.toDTO(entity);
     }
 
     @Override
@@ -58,17 +59,11 @@ public class ClientServiceImpl implements ClientServiceInterface{
     }
 
     @Override
-    @SuppressWarnings("null")
-    public Optional<ClientDTO> get(Integer id) {
-        Optional<ClientEntity> client = repository.findById(id);
-        if (client.isPresent()) {
-            ClientEntity clientToDTO = client.get();
-            return Optional.of(mapper.toDTO(clientToDTO));
-        }
-        return Optional.empty();
+    public ClientDTO get(Integer id) {
+        ClientEntity entity = repository.findById(id).orElseThrow(ClientNotFoundException::new);
+        return mapper.toDTO(entity);
     }
 
-    @SuppressWarnings("null")
     @Override
     public ClientDTO update(Integer id, ClientDTOSave client) {
         
@@ -79,16 +74,14 @@ public class ClientServiceImpl implements ClientServiceInterface{
 
             repository.save(clientDb);
             return mapper.toDTO(clientDb);
-        } ).orElseThrow();
+        } ).orElseThrow(ClientNotFoundException::new);
 
     }
 
-    @SuppressWarnings("null")
     @Override
     public ClientDTO create(ClientDTOSave client) {
         ClientEntity clientEntity = mapper.toEntity(client);
-        repository.save(clientEntity);
-        return mapper.toDTO(clientEntity);
+        return mapper.toDTO(repository.save(clientEntity));
     }
     
 }

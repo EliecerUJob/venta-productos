@@ -14,7 +14,6 @@ public class PaymentTotalItems {
         this.repository = repository;
     }
 
-    @SuppressWarnings("null")
     public double totalItems(Integer orderItemId) {
         return repository.findById(orderItemId).stream().mapToDouble(OrderItemEntity::getUnitPrice).sum();
     }

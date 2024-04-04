@@ -2,6 +2,7 @@ package com.ventaproductos.shippingdetail.service;
 
 import java.util.List;
 
+import com.ventaproductos.order.entity.OrderStatusEnum;
 import com.ventaproductos.shippingdetail.entity.ShippingDetailDTO;
 import com.ventaproductos.shippingdetail.entity.ShippingDetailDTOSave;
 import com.ventaproductos.shippingdetail.entity.ShippingDetailDTOUpdate;
@@ -15,7 +16,7 @@ public interface ShippingdetailServiceInterface {
     void delete(Integer id);
 
     List<ShippingDetailDTO> getByOrderId(Integer id);
-    List<ShippingDetailDTO> getByOrderStatus(String status);
+    List<ShippingDetailDTO> getByOrderStatus(OrderStatusEnum status);
     List<ShippingDetailDTO> getByConveyor(String conveyor);
 
 }

@@ -35,7 +35,7 @@ public class ClientController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ClientDTO>> get(@PathVariable("id") Integer id){
+    public ResponseEntity<ClientDTO> get(@PathVariable("id") Integer id){
         return new ResponseEntity<>(clientService.get(id), HttpStatus.OK);
     }
 

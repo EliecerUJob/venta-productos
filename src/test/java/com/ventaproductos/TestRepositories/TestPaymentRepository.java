@@ -34,7 +34,6 @@ public class TestPaymentRepository extends AbstractIntegrationTest{
         orderRepository.deleteAll();
     }
 
-    @SuppressWarnings("null")
     void init(){
         OrderEntity order = OrderEntity.builder()
                .dateOrder(LocalDate.now())

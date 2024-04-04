@@ -44,7 +44,6 @@ public class TestOrderItemRepository extends AbstractIntegrationTest{
         clientRepository.deleteAll();
     }
 
-    @SuppressWarnings("null")
     void init(){
 
         ClientEntity client = ClientEntity.builder()
