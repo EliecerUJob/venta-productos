@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.stereotype.Service;
 
 import com.ventaproductos.order.entity.OrderEntity;
+import com.ventaproductos.order.entity.OrderStatusEnum;
 import com.ventaproductos.order.repository.OrderRepository;
 import com.ventaproductos.product.entity.ProductEntity;
 import com.ventaproductos.product.repository.ProductRepository;
@@ -35,7 +36,6 @@ public class ShippingdetailServiceImp implements ShippingdetailServiceInterface{
         this.shippingDetailMapper = shippingDetailMapper;
     }
 
-    @SuppressWarnings("null")
     @Override
     public ShippingDetailDTO create(ShippingDetailDTOSave shippingDetail) {
         
@@ -63,14 +63,12 @@ public class ShippingdetailServiceImp implements ShippingdetailServiceInterface{
         return shippingDetailList.stream().map( shippingDetailMapper::toDTO ).toList();
     }
 
-    @SuppressWarnings("null")
     @Override
     public ShippingDetailDTO get(Integer id) {
         ShippingDetailEntity shippingDetailEntity = repository.findById(id).get();
         return shippingDetailMapper.toDTO(shippingDetailEntity);
     }
 
-    @SuppressWarnings("null")
     @Override
     public ShippingDetailDTO update(Integer id, ShippingDetailDTOUpdate shippingDetail) {
         return repository.findById(id).map( shippingDetailDb ->{
@@ -85,7 +83,6 @@ public class ShippingdetailServiceImp implements ShippingdetailServiceInterface{
         }).orElseThrow();
     }
 
-    @SuppressWarnings("null")
     @Override
     public void delete(Integer id) {
         repository.deleteById(id);
@@ -104,7 +101,7 @@ public class ShippingdetailServiceImp implements ShippingdetailServiceInterface{
     }
 
     @Override
-    public List<ShippingDetailDTO> getByOrderStatus(String status) {
+    public List<ShippingDetailDTO> getByOrderStatus(OrderStatusEnum status) {
         var shippingDetailList = repository.findByOrderStatus(status);
         return shippingDetailList.stream().map( shippingDetailMapper::toDTO ).toList();
     }

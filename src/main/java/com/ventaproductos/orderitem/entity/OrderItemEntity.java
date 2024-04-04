@@ -4,8 +4,6 @@ import com.ventaproductos.product.entity.ProductEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,13 +16,13 @@ public class OrderItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private BigDecimal quantity;
+    private int quantity;
     @Column(name = "unit_price")
-    private BigDecimal unitPrice;
+    private double unitPrice;
 
     //Foreign keys
     @ManyToOne
-    @JoinColumn(name = "order_id", unique = true)
+    @JoinColumn(name = "order_id")
     private OrderEntity order;
 
     @OneToOne(fetch = FetchType.LAZY)

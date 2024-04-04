@@ -16,5 +16,6 @@ public interface OrderItemServiceInterface {
 
     List<OrderItemDTO> getOrderItemsdByProductId(Integer product);
     List<OrderItemDTO> getOrderItemsByOrderId(Integer id);
+    Double sumTotalSalesByProduct(Integer productId);
     
 }

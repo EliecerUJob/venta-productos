@@ -37,7 +37,6 @@ public class PaymentServiceImp implements PaymentServiceInterface{
         this.paymentTotalItems = paymentTotalItems;
     }
 
-    @SuppressWarnings("null")
     @Override
     public PaymentDTO create(PaymentDTOSave paymentDTO) {
 
@@ -54,7 +53,6 @@ public class PaymentServiceImp implements PaymentServiceInterface{
         
     }
 
-    @SuppressWarnings("null")
     @Override
     public PaymentDTO get(Integer id) {
         PaymentEntity paymentEntity = repository.findById(id).orElseThrow();
@@ -67,7 +65,6 @@ public class PaymentServiceImp implements PaymentServiceInterface{
         return payments.stream().map( paymentMapper::toDTO ).toList();
     }
 
-    @SuppressWarnings("null")
     @Override
     public PaymentDTO update(Integer id, PaymentDTOUpdate payment) {
         return repository.findById(id).map( paymentDb -> {
@@ -80,7 +77,6 @@ public class PaymentServiceImp implements PaymentServiceInterface{
         }).orElseThrow();
     }
 
-    @SuppressWarnings("null")
     @Override
     public void delete(Integer id) {
         repository.deleteById(id);

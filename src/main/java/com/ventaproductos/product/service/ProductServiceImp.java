@@ -1,10 +1,10 @@
 package com.ventaproductos.product.service;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import org.springframework.stereotype.Service;
 
+import com.ventaproductos.Exceptions.ProductNotFoundException;
 import com.ventaproductos.product.entity.ProductDTO;
 import com.ventaproductos.product.entity.ProductDTOSave;
 import com.ventaproductos.product.entity.ProductEntity;
@@ -22,7 +22,6 @@ public class ProductServiceImp implements ProductServiceInterface{
         this.productMapper = productMapper;
     }
 
-    @SuppressWarnings("null")
     @Override
     public ProductDTO create(ProductDTOSave product) {
         ProductEntity productEntity = productMapper.toEntity(product);
@@ -35,14 +34,12 @@ public class ProductServiceImp implements ProductServiceInterface{
         return productList.stream().map( productMapper::toDTO ).toList();
     }
 
-    @SuppressWarnings("null")
     @Override
     public ProductDTO get(Integer id) {
-        ProductEntity productEntity = repository.findById(id).get();
+        ProductEntity productEntity = repository.findById(id).orElseThrow(ProductNotFoundException::new);
         return productMapper.toDTO(productEntity);
     }
 
-    @SuppressWarnings("null")
     @Override
     public ProductDTO update(Integer id, ProductDTOSave product) {
         return repository.findById(id).map( productDb -> {
@@ -52,13 +49,13 @@ public class ProductServiceImp implements ProductServiceInterface{
             productDb.setStock(product.stock());
 
             return productMapper.toDTO(repository.save(productDb));
-        }).orElseThrow();
+        }).orElseThrow(ProductNotFoundException::new);
     }
 
-    @SuppressWarnings("null")
     @Override
     public void delete(Integer id) {
-        repository.deleteById(id);
+        ProductEntity productEntity = repository.findById(id).orElseThrow(ProductNotFoundException::new);
+        repository.delete(productEntity);
     }
 
     @Override
@@ -74,7 +71,7 @@ public class ProductServiceImp implements ProductServiceInterface{
     }
 
     @Override
-    public List<ProductDTO> getByPriceAndStock(BigDecimal price, int stock) {
+    public List<ProductDTO> getByPriceAndStock(double price, int stock) {
         var productList = repository.findByPriceLessThanAndStockLessThan(price, stock);
         return productList.stream().map( productMapper::toDTO ).toList();
     }

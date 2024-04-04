@@ -1,7 +1,5 @@
 package com.ventaproductos.orderitem.entity;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ventaproductos.order.entity.OrderEntity;
@@ -19,9 +17,9 @@ public record OrderItemDTOSave(
     @NotNull(message = "required field")
     Integer orderId,
     @NotNull(message = "required field")
-    Integer quantity,
+    int quantity,
     @NotNull(message = "required field")
-    BigDecimal unitPrice,
+    double unitPrice,
     @JsonIgnore
     OrderEntity order,
     @JsonIgnore

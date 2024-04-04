@@ -47,7 +47,7 @@ public class OrderController {
     }
     
     @PostMapping()
-    public ResponseEntity<Optional<OrderDTO>> create(@RequestBody OrderDTOSave order) {
+    public ResponseEntity<OrderDTO> create(@RequestBody OrderDTOSave order) {
         orderService.create(order);
         return new ResponseEntity<>(HttpStatus.OK);
     }

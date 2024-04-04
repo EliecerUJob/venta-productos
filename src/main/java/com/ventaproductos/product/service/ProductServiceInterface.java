@@ -1,6 +1,5 @@
 package com.ventaproductos.product.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import com.ventaproductos.product.entity.ProductDTO;
@@ -16,6 +15,6 @@ public interface ProductServiceInterface {
 
     List<ProductDTO> getByNameContaining(String term);
     List<ProductDTO> getByStock(int quantity);
-    List<ProductDTO> getByPriceAndStock(BigDecimal price, int stock);
+    List<ProductDTO> getByPriceAndStock(double price, int stock);
 
 }

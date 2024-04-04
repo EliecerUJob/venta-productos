@@ -14,6 +14,8 @@ public interface ShippingDetailMapper {
     @Mapping(target = "productId", source = "product.id")
     ShippingDetailDTO toDTO(ShippingDetailEntity entity);
 
+    @Mapping(target = "order.id", source = "orderId")
+    @Mapping(target = "product.id", source = "productId")
     @Mapping(target = "id", ignore=true)
     ShippingDetailEntity toEntity(ShippingDetailDTOSave dto);
     

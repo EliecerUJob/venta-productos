@@ -1,7 +1,5 @@
 package com.ventaproductos.payment.mapper;
 
-import java.math.BigDecimal;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -26,7 +24,7 @@ public abstract class PaymentMapper {
     public abstract PaymentEntity toEntity(PaymentDTOSave dto);
 
     @Named("totalPayment")
-    public BigDecimal totalPayment(Integer id){
+    public double totalPayment(Integer id){
         return paymentTotalItems.totalItems(id);
     }
 

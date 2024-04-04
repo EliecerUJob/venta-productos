@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ventaproductos.order.entity.OrderDTORecuperate;
 import com.ventaproductos.order.entity.OrderEntity;
 import com.ventaproductos.order.entity.OrderStatusEnum;
 
@@ -19,6 +18,6 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer>{
     List<OrderEntity> findByClientIdAndStatus(Integer client, OrderStatusEnum status);
 
     @Query(value = "SELECT * FROM orders p JOIN order_items oi ON p.id = oi.order_id WHERE p.client_id = :clientId", nativeQuery=true)
-    List<OrderDTORecuperate> recuperateOrderWithItemsByCustomer(@Param("clientId") Integer clientID);
+    List<Object[]> recuperateOrderWithItemsByCustomer(@Param("clientId") Integer clientId);
 
 }
